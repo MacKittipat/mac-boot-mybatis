@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mackittipat.macmybatis.dao.ProductDAO">
+
+    <insert id="insert" parameterType="Product">
+        INSERT INTO product(name, price, create_datetime) VALUES(#{name}, #{price}, #{createDateTime})
+    </insert>
+
+    <select id="findById" parameterType="Long" resultType="Product">
+        SELECT
+            id,
+            name,
+            price,
+            create_datetime as createDateTime
+        FROM product
+        WHERE id=#{id}
+    </select>
+
+    <select id="findById2" parameterType="Long" resultMap="productResultMap">
+        SELECT
+        id,
+        name,
+        price,
+        create_datetime
+        FROM product
+        WHERE id=#{id}
+    </select>
+
+    <resultMap id="productResultMap" type="Product">
+        <!-- id, name, price are optional because column and property use same name. No need to map column -->
+        <!--<id column="id" property="id"/>-->
+        <!--<result column="name" property="name"/>-->
+        <!--<result column="price" property="price"/>-->
+        <result column="create_datetime" property="createDateTime"/>
+    </resultMap>
+
+</mapper>
